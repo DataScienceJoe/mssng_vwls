@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import time
 
+wait_time = 0.1 # number of seconds after the buzz to reveal answer
+
 # Load the questions from df.csv
 @st.cache_data
 def load_questions():
@@ -24,7 +26,7 @@ def press_buzzer():
     if not st.session_state.waiting_for_answer:
         st.session_state.buzz_pressed = True
         st.session_state.waiting_for_answer = True
-        time.sleep(3)  # Wait 3 seconds
+        time.sleep(wait_time)
         st.session_state.show_answer = True
         st.session_state.waiting_for_answer = False
 
@@ -40,10 +42,10 @@ question = df.iloc[st.session_state.current_index]['puzzle_front']
 answer = df.iloc[st.session_state.current_index]['puzzle_back']
 
 # UI Layout
-st.title("🔔 Buzzer Quiz Game")
+st.title("🔔 Only Connect - Missing Vowels 🔔")
 
 st.subheader(f"**Category:** {category}")
-st.write(f"**Question:** {question}")
+st.subheader(f"**Question:** {question}")
 
 # Buzzer Button (only enabled if not waiting for answer)
 if st.button("🔴 Press to Buzz", disabled=st.session_state.waiting_for_answer):
@@ -51,7 +53,7 @@ if st.button("🔴 Press to Buzz", disabled=st.session_state.waiting_for_answer)
 
 # Show answer after 3 seconds
 if st.session_state.show_answer:
-    st.write(f"**Answer:** {answer}")
+    st.subheader(f"**Answer:** {answer}")
     st.button("➡️ Next", on_click=next_question)  # Show "Next" button after answer appears
 else:
-    st.write("**Answer:** ⏳ (Revealed 3 seconds after buzzing...)")
+    st.subheader(f"**Answer:** ⏳ (Revealed {wait_time} seconds after buzzing...)")
