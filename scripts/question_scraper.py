@@ -99,7 +99,7 @@ for episode in episode_data_list:
 
 
 # Step 5: Save extracted data to a CSV file
-csv_filename = "data/puzzle_data.csv"
+csv_filename = "data/real_episode_data.csv"
 
 with open(csv_filename, mode="w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
